@@ -1,0 +1,17 @@
+<div class="input-group">
+  <input type="text" class="form-control" id="cname" placeholder="Search for..." #cityName/>
+  <button class="btn btn-default" type="button" id="search" (click)="onButtonClick(cityName.value)"></button>
+  </div>
+<div class="container" id="cd">
+<app-summary [summaryInfo]="weatherService.summary"></app-summary>
+<app-temperature [tempInfo]="weatherService.tempinfo"></app-temperature>
+<app-tpw [tpwdet]="weatherService.tpwinfo"></app-tpw>
+<app-chart></app-chart>
+<div class="forecast">
+  <div class="col-xs-12" id="fore1">
+    <div class="row">
+      <app-daytile *ngFor="let dayInfo of weatherService.dayTileList" [dayTileInfo]="dayInfo"></app-daytile>
+    </div>
+  </div>
+</div>
+</div>

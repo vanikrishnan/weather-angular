@@ -1,0 +1,19 @@
+#inner{
+    display: flex;
+    justify-content: space-evenly;
+}
+/* .tile{
+    margin-left: 10px;
+    /* box-shadow: 0px 0px 0px gray; }*/
+#inn{
+    border: width border-style color;
+    border-width: 100px;
+    border-radius: 2px;      
+}
+#ty{
+    display: inline-flex;
+}
+#grid1{
+    box-shadow: 0px 0px 2px gray;
+    /* margin-left: 10px; */
+}

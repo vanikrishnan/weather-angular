@@ -1,0 +1,10 @@
+.tempdet{
+    display: inline-flex;
+    margin-right: 800px;
+    margin-top: 29px;
+    margin-left: 44px;
+    /* float: left; */
+}
+.cf{
+    display: inline-flex;
+}
