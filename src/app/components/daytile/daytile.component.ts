@@ -14,7 +14,6 @@ export class DaytileComponent implements OnInit {
   }
 
   onTileClick() {
-    console.log("hi");
     this.weatherService.updateDayInfoFor(this.dayTileInfo.dayNum);
   }
 

@@ -1,13 +1,11 @@
- /* .details{
+ .details{
     margin-top: -55px;
     margin-right: 177px;
     float: right;
 
-}*/
-#btn{
-    margin-top: 10px;
-}  
-#tpdet{
-    float: right;
-    margin-top: -34px;
 }
+#btn{
+    margin-top: 12px;
+    margin-right: -235px;
+    float: right;
+} 

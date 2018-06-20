@@ -16,6 +16,7 @@ summary:Isummary;
 tempinfo : Itemp;
 tpwinfo : Itpwdet;
 dayTileList: Array<Itile>;
+chartinfo: Array<any>;
   constructor(private httpService : Http) {
     this.dayWiseMap={};
    }
@@ -30,17 +31,24 @@ dayTileList: Array<Itile>;
       day: moment(dayInfoForDay[0].dt * 1000).format("dddd"),
       weatherdesc: dayInfoForDay[0].weather[0].description
     }
+    // const iconid=obj[0].weather[0].icon;
+    // const icon="https://openweathermap.org/img/w/"+ iconid + ".png";
+   
+    this.tempinfo = {
+      imgurl: 'assets/images/partly_cloudy.png',
+      tempincel: Math.round(dayInfoForDay[0].main.temp-270)
+     }
+// console.log(this.tempinfo.tempincel);
 
-    this.tpwinfo= {
-      temp:dayInfoForDay[0].main.temp ,
+    this.tpwinfo = {
+      temp: Math.round(dayInfoForDay[0].main.temp-270),
       pres: dayInfoForDay[0].main.pressure,
-      wind:dayInfoForDay[0].wind.speed
+      wind: dayInfoForDay[0].wind.speed
     }
+    // console.log(this.tpwinfo.temp);
+    
 
-    this.tempinfo= {
-      imgurl:'assets/images/partly_cloudy.png',
-      tempincel:dayInfoForDay[0].main.temp
-    }
+
 
   }
 
@@ -60,25 +68,24 @@ fetchWeatherInfo(city :string){
         weatherdesc: data.list[0].weather[0].description
       };
 
+      const iconid=data.list[0].weather[0].icon;
+      const icon="https://openweathermap.org/img/w/"+ iconid + ".png";
+     
       this.tempinfo = {
-        imgurl: 'assets/images/partly_cloudy.png',
-        tempincel: data.list[0].main.temp
+        imgurl: icon,
+        tempincel: Math.round(data.list[0].main.temp-270)
        };
+      //  console.log(this.tempinfo);
+       
 
-console.log(this.tempinfo);
-
-console.log(this.tempinfo.tempincel);
-
-this.tpwinfo = {
-        temp: data.list[0].main.temp,
+      this.tpwinfo = {
+        temp: Math.round(data.list[0].main.temp-270),
         pres: data.list[0].main.pressure,
         wind: data.list[0].wind.speed
       };
-      console.log(this.tpwinfo);
 
-      console.log(this.tpwinfo.temp);;
+      // console.log(this.tpwinfo);
       
-
 
 
 
@@ -103,13 +110,26 @@ const sortedMap = _.sortBy(this.dayWiseMap, (value) => {
 
 console.log(sortedMap);
 
+const currentDayDetails = this.dayWiseMap[new Date().getDay()];
+console.log(currentDayDetails);
+this.chartinfo = currentDayDetails
+.map(tempInfoObj => {
+  return [moment(tempInfoObj.dt * 1000).format('dddd, h:mm a'), tempInfoObj.main.temp]
+})
+console.log("chardata"+this.chartinfo);
+
+
 this.dayTileList = _.map(sortedMap, (obj) => {
+  const iconid=obj[0].weather[0].icon;
+  const icon="https://openweathermap.org/img/w/"+ iconid + ".png";
   const minTemp = _.reduce(obj.map(interval => interval.main.temp_min), (a, b) => a + b) / obj.length;
+  const maxTemp = _.reduce(obj.map(interval => interval.main.temp_max), (a, b) => a + b) / obj.length;
+  
   return {
     day: moment(obj[0].dt * 1000).format("ddd"),
     mintemp: _.round(minTemp - 270, 2),
-    maxtemp: _.round(obj[0].main.temp_max - 270, 2),
-    imgurl: 'assets/images/partly_cloudy.png',
+    maxtemp: _.round(maxTemp - 270, 2),
+    imgurl: icon,
     dayNum: new Date(obj[0].dt * 1000).getDay()
   }
 });
